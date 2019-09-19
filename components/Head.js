@@ -11,6 +11,7 @@ export default class HeadComponent extends React.Component {
         <meta name="description" content={description}/>
         <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon"/>
         <link rel="icon" href="/static/favicon.ico" type="image/x-icon"/>
+        <script src="https://code.responsivevoice.org/responsivevoice.js"></script>
       </Head>
     )
   }

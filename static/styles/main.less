@@ -1,0 +1,107 @@
+@keyframes kenburns {
+    0% {
+      transform: scale3d(1, 1, 1) translate3d(-50px, -25px, 0px);
+      opacity: 0;
+    }
+    35% {
+      opacity: 1;
+    }
+    50% {        
+        opacity: 1;
+    }
+    65% {
+        transform: scale3d(1.1, 1.1, 1.1) translate3d(50px, 25px, 0px);
+        animation-timing-function: ease-in;
+        opacity: 1;
+      }  
+    100% {
+        transform: scale3d(1, 1, 1) translate3d(150px, 50px, 0px);
+        opacity: 0;
+    }
+}
+
+@keyframes rotates1 {
+    0% {
+      transform: translateX(-0%) translateY(-50%) rotate(0deg);
+    }
+    100% {
+        transform: translateX(-0%) translateY(-50%) rotate(360deg);
+        animation-timing-function: linear;
+    }
+}
+
+@keyframes rotates2 {
+    0% {
+      transform: translateX(-0%) translateY(-50%) rotate(0deg);
+    }
+    100% {
+        transform: translateX(-0%) translateY(-50%) rotate(-360deg);
+        animation-timing-function: linear;
+    }
+}
+
+
+body {
+    background-image: url(/static/images/clouds_tile4.gif); 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    overflow: hidden;
+}
+
+.ken-burns {
+    animation: kenburns 20s normal forwards;
+}
+
+.preview-elements-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    img {
+        transform: translateX(-50%) translateY(-50%);
+    }
+
+    &.behind {
+        z-index: -10;
+    }
+
+    &.on-top {
+        z-index: 10;
+    }
+}
+
+.all-text-container {
+    padding: 50px;
+    position: absolute;
+    bottom: 0;
+    filter: sepia(0%);
+}
+
+.line-container {
+    // filter: sepia(0%);
+}
+
+.letter-image {
+    filter: drop-shadow(5px 5px 6px);
+    margin: 7px 3px;
+
+    &.anim-1 {
+        animation: rotates1 160s infinite;
+    }
+
+    &.anim-2 {
+        animation: rotates2 160s infinite;
+    }
+
+    &.anim-3 {
+        animation: rotates1 273s infinite;
+    }
+
+    &.anim-4 {
+        animation: rotates2 319s infinite;
+    }
+}
+
+
+
