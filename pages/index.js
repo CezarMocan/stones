@@ -8,6 +8,11 @@ const STONE_IMAGES = ['1.png', '2.png', '3.png', '4.png', '5.png',
 
 const STONE_ANIM_CLASSES = ['anim-1', 'anim-2', 'anim-3', 'anim-4']
 
+const KEN_BURNS_IMAGES = ['clouds4.gif', 'stone_2.png', 'stone_11.gif',
+                        'dollar.png'
+                    ]
+                    .map(f => `/static/images/${f}`)
+
 let UID = 0
 
 export default class Index extends React.Component {
@@ -25,9 +30,27 @@ export default class Index extends React.Component {
         if (sound.currentTime > 0) sound.currentTime = 0
         else sound.play()
     }
+    appendKenBurns(image) {
+        const newId = ++UID
+        this.setState({
+            kenBurnsMap: {
+                ...this.state.kenBurnsMap,
+                [newId]: { image }
+            }
+        }, () => {
+            setTimeout(() => {
+                this.setState({
+                    kenBurnsMap: {
+                        ...this.state.kenBurnsMap,
+                        [newId]: false   
+                    }
+                })
+            }, 20000)
+        })
+    }
     onKeyDown = (e) => {
         console.log('on key down: ', e)
-        if ((e.key >= 'a' && e.key <= 'z') || e.key == ' ' || e.key == ',' || e.key == '.') {
+        if ((e.key >= 'a' && e.key <= 'z') || e.key == ' ' || e.key == ',' || e.key == '.' || e.key == '?' || e.key == '!') {
             this.setState({
                 buffer: this.state.buffer + e.key,
                 allText: this.state.allText + e.key
@@ -40,31 +63,6 @@ export default class Index extends React.Component {
                 buffer: "",
                 allText: allText + "\n"
             })
-        }  else if (e.key == '[') {
-            
-        } else if (e.key == ']') {
-
-        } else if (e.key == '\\') {
-            const newId = ++UID
-            this.setState({
-                kenBurnsMap: {
-                    ...this.state.kenBurnsMap,
-                    [newId]: true 
-                }
-            }, () => {
-                setTimeout(() => {
-                    this.setState({
-                        kenBurnsMap: {
-                            ...this.state.kenBurnsMap,
-                            [newId]: false   
-                        }
-                    })
-                }, 20000)
-            })
-        } else if (e.key == '-') {
-
-        } else if (e.key == '=') {
-
         } else if (e.key == '1') {
             this.playSound(this._bell1)
         } else if (e.key == '2') {
@@ -80,9 +78,21 @@ export default class Index extends React.Component {
         } else if (e.key == '7') {
             this.playSound(this._bell7)
         } else if (e.key == '8') {
-            this.playSound(this._bell8)
+            // this.playSound(this._bell8)
         } else if (e.key == '9') {
-            this.playSound(this._bell9)
+            this.appendKenBurns(KEN_BURNS_IMAGES[0])
+        } else if (e.key == '0') {
+            this.appendKenBurns(KEN_BURNS_IMAGES[1])
+        } else if (e.key == '-') {
+            this.appendKenBurns(KEN_BURNS_IMAGES[2])
+        } else if (e.key == '=') {
+            
+        } else if (e.key == '[') {
+            
+        } else if (e.key == ']') {
+
+        } else if (e.key == '\\') {
+            this.appendKenBurns(KEN_BURNS_IMAGES[3])
         } 
     }
     getImageForCharacter = (c) => {
@@ -128,14 +138,17 @@ export default class Index extends React.Component {
                 <audio ref={(r) => this._bell5 = r} src="/static/audio/bell5.mp3" preload="auto"></audio>
                 <audio ref={(r) => this._bell6 = r} src="/static/audio/bell6.mp3" preload="auto"></audio>
                 <audio ref={(r) => this._bell7 = r} src="/static/audio/bell7.mp3" preload="auto"></audio>
-                <audio ref={(r) => this._bell8 = r} src="/static/audio/bell8.mp3" preload="auto"></audio>
-                <audio ref={(r) => this._bell9 = r} src="/static/audio/bell9.mp3" preload="auto"></audio>
+                {/* <audio ref={(r) => this._bell8 = r} src="/static/audio/bell8.mp3" preload="auto"></audio> */}
 
                 {   Object.keys(kenBurnsMap).map(k => {
                     if (!kenBurnsMap[k]) return null
+                    const { image } = kenBurnsMap[k]
                     return (
                         <div key={`ken-burns-${k}`} className="preview-elements-container ken-burns behind">
-                            <img src="/static/images/pr1.png"/>
+                            <div className="container">
+                                <img className="frame" src="/static/images/frame.png"/>
+                                <img className="content" src={image}/>
+                            </div>
                         </div>    
                     )
                 })
